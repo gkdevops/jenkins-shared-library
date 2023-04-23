@@ -73,7 +73,7 @@ def call(String appName) {
         }
         stage('Docker Image Scan'){
             steps {
-                sh "trivy image scan chgoutam/petclinic:$BUILD_ID"
+                sh "trivy image chgoutam/petclinic:$BUILD_ID"
             }
         }
     }
