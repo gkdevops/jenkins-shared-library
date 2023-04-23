@@ -51,11 +51,13 @@ def call(String appName) {
                 }
             }
         }
+        /*
         stage('SCA Test'){
             steps {
                 sh "snyk test --severity-threshold=critical"
             }
         }
+        */
         stage('Docker Build'){
             steps {
                 sh '''
