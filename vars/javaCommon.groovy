@@ -9,7 +9,7 @@ def call(String appName) {
           maven 'MAVEN3'
           jdk 'JDK8'
     }
-    
+
     options {
         buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
         disableConcurrentBuilds()
@@ -44,16 +44,24 @@ def call(String appName) {
             }
           }
         }
-        stage("Quality Gate") {
+        stage("SonarQube Quality Gate") {
             steps {
                 timeout(time: 1, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
         }
-        stage('Code Package'){
+        stage('SCA Test'){
             steps {
-                sh "mvn package"
+                sh "snyk test --severity-threshold=critical"
+            }
+        }
+        stage('Docker Build'){
+            steps {
+                sh '''
+                docker image build -t chgoutam/petclinic:$BUILD_ID .
+                docker image push chgoutam/petclinic:$BUILD_ID
+                '''
             }
         }
     }
