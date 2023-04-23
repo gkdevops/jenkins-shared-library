@@ -26,14 +26,10 @@ def call(String appName) {
         
         stage('Code Build'){
             steps {
-                sh "mvn test-compile"
+                sh "mvn test"
             }
         }
-                stage('Unit test') {
-                    steps {
-                        sh "mvn test"
-                    }
-                }
+
         stage('SonarQube Scan'){
           environment {
             SCANNER_HOME = tool 'sonar_scanner'
