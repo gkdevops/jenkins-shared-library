@@ -19,6 +19,7 @@ def call(String appName) {
     stages {
         stage('Code Checkout'){
             steps {
+                deleteDir()
                 echo "code checkout"
                 git credentialsId: 'github-creds', url: "https://github.com/gkdevops/${appName}.git"
             }
@@ -54,12 +55,22 @@ def call(String appName) {
             }
         }
         */
+        stage('Maven Package'){
+            steps {
+                sh "mvn package"
+            }
+        }
         stage('Docker Build'){
             steps {
                 sh '''
                 sudo docker image build -t chgoutam/petclinic:$BUILD_ID .
                 sudo docker image push chgoutam/petclinic:$BUILD_ID
                 '''
+            }
+        }
+        stage('Docker Image Scan'){
+            steps {
+                sh "trivy image scan chgoutam/petclinic:$BUILD_ID"
             }
         }
     }
