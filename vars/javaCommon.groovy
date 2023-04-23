@@ -63,7 +63,7 @@ def call(String appName) {
         stage('Docker Build'){
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-credentials', passwordVariable: 'dockerpassword', usernameVariable: 'dockerusername')]) {
-                  sh "docker login -u $dockerusername -p $dockerpassword"
+                  sh "sudo docker login -u $dockerusername -p $dockerpassword"
                 }
                 sh '''
                 sudo docker image build -t chgoutam/petclinic:$BUILD_ID .
