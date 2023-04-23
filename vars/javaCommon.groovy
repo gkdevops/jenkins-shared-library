@@ -20,7 +20,7 @@ def call(String repoUrl) {
         stage('Code Checkout'){
             steps {
                 echo "code checkout"
-                git credentialsId: 'github-creds', url: 'https://github.com/gkdevops/"{appName}".git'
+                git credentialsId: 'github-creds', url: "https://github.com/gkdevops/${appName}.git"
             }
         }
         
