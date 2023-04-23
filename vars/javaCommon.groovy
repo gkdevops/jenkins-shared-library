@@ -61,8 +61,8 @@ def call(String appName) {
         stage('Docker Build'){
             steps {
                 sh '''
-                docker image build -t chgoutam/petclinic:$BUILD_ID .
-                docker image push chgoutam/petclinic:$BUILD_ID
+                sudo docker image build -t chgoutam/petclinic:$BUILD_ID .
+                sudo docker image push chgoutam/petclinic:$BUILD_ID
                 '''
             }
         }
