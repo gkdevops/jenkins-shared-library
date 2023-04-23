@@ -57,7 +57,7 @@ def call(String appName) {
         */
         stage('Maven Package'){
             steps {
-                sh "mvn package"
+                sh "mvn -Dtests.skip=false package"
             }
         }
         stage('Docker Build'){
