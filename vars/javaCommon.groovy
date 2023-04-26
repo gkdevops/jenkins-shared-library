@@ -66,14 +66,14 @@ def call(String appName) {
                   sh "sudo docker login -u $dockerusername -p $dockerpassword"
                 }
                 sh '''
-                sudo docker image build -t chgoutam/petclinic:$BUILD_ID .
-                sudo docker image push chgoutam/petclinic:$BUILD_ID
+                sudo docker image build -t chgoutam/${appName}:$BUILD_ID .
+                sudo docker image push chgoutam/${appName}:$BUILD_ID
                 '''
             }
         }
         stage('Docker Image Scan'){
             steps {
-                sh "trivy image chgoutam/petclinic:$BUILD_ID"
+                sh "trivy image chgoutam/${appName}:$BUILD_ID"
             }
         }
     }
